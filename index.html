@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="№4 Қ. Сәтбаев атындағы мектептің интерактивті виртуалды музейі">
+  <title>Мектебімнің цифрлық шежіресі | Виртуалды музей</title>
+  <style>
+    /* 1. Негізгі дизайн: түстер, өлшемдер және ортақ ережелер */
+    :root { --navy:#102c4c; --blue:#087fd3; --light:#eaf6ff; --muted:#59718b; --line:#d9e8f5; --shadow:0 16px 40px rgba(16,44,76,.09); }
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:86px}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--navy);background:#fff;line-height:1.65}button,input{font:inherit}a{color:inherit;text-decoration:none}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #ffbd59;outline-offset:3px} .container{width:min(1120px,calc(100% - 36px));margin:auto}.section{padding:82px 0}.section.alt{background:#f5faff}.eyebrow{color:var(--blue);font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.78rem}.section h2{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin:10px 0 16px}.lead{color:var(--muted);max-width:740px}.btn{border:0;border-radius:13px;padding:13px 21px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:750;transition:transform .2s,box-shadow .2s,background .2s}.btn:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(8,127,211,.18)}.primary{background:var(--blue);color:white}.secondary{background:var(--light);color:var(--navy);border:1px solid #b8def7}.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:25px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}.card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(16,44,76,.13)}
+    /* 2. Жоғарғы мәзір */
+    .header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}.header-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}.brand{display:flex;align-items:center;gap:11px;min-width:0}.logo{width:46px;height:46px;flex:none;display:grid;place-items:center;background:linear-gradient(145deg,#0789dc,#123a66);color:white;border-radius:14px;font-size:1.3rem;font-weight:900}.brand strong{display:block;font-size:.92rem;line-height:1.3}.brand small{display:block;color:var(--muted);font-size:.75rem}.nav{display:flex;align-items:center;gap:19px}.nav a{font-weight:650;font-size:.88rem;white-space:nowrap}.nav a:hover{color:var(--blue)}.menu-toggle{display:none;background:var(--light);border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--navy)}
+    /* 3. Басты бет */
+    .hero{background:radial-gradient(circle at 85% 12%,#d9efff,transparent 39%),linear-gradient(145deg,#fff,#f6fbff);padding:86px 0 74px}.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:44px}.hero h1{font-size:clamp(2.3rem,5vw,4.2rem);line-height:1.12;margin:16px 0 20px;letter-spacing:-.04em}.hero h1 span{color:var(--blue)}.hero p{color:var(--muted);font-size:1.07rem}.actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:26px}.hero-art{min-height:330px;display:grid;place-items:center;border-radius:30px;background:linear-gradient(155deg,#cdeaff,#f5fbff);border:1px solid #bfe0f6;position:relative;overflow:hidden}.hero-art::before{content:"";position:absolute;inset:14%;border:3px solid rgba(8,127,211,.13);border-radius:50%;transform:rotate(-20deg)}.art-building{width:72%;max-width:320px;position:relative;z-index:1;filter:drop-shadow(0 24px 17px rgba(16,44,76,.16))}.art-roof{height:35px;background:#174d7b;clip-path:polygon(50% 0,100% 100%,0 100%)}.art-front{background:#fff;border:5px solid #2d7cae;border-bottom:13px solid #174d7b;min-height:170px;padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.art-front i{background:linear-gradient(135deg,#8ac8ee,#e4f7ff);border:5px solid #397baa}.art-front i:nth-last-child(2){background:#174d7b}.art-label{text-align:center;font-weight:900;color:#16416a;margin-top:12px}
+    /* 4. Бір бөлменің шартты 3D панорамасы */
+    .museum-shell{background:#e9f4fc;border:1px solid #c6e1f4;border-radius:24px;padding:16px;box-shadow:var(--shadow)}.museum-top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.museum-top p{margin:0;color:var(--muted);font-size:.9rem}.room-viewport{height:390px;position:relative;overflow:hidden;perspective:850px;border-radius:17px;background:linear-gradient(#b6d7eb 0 52%,#d4e1e9 52%)}.room{position:absolute;left:50%;top:50%;width:680px;height:460px;transform-style:preserve-3d;transform:translate(-50%,-50%) rotateX(-4deg) rotateY(0deg);transition:transform .55s ease}.wall{position:absolute;left:50%;top:50%;width:680px;height:340px;margin-left:-340px;margin-top:-170px;background:linear-gradient(135deg,#fff,#dceefb);border:9px solid #92b9d6;box-shadow:inset 0 0 50px rgba(16,44,76,.1);backface-visibility:hidden}.wall.back{transform:translateZ(-270px)}.wall.front{transform:rotateY(180deg) translateZ(-270px);background:linear-gradient(135deg,#f4fbff,#cbe4f5)}.wall.left{width:540px;margin-left:-270px;transform:rotateY(-90deg) translateZ(340px)}.wall.right{width:540px;margin-left:-270px;transform:rotateY(90deg) translateZ(340px)}.floor{position:absolute;left:50%;top:50%;width:680px;height:540px;margin-left:-340px;margin-top:-270px;background:repeating-linear-gradient(90deg,#c9dce9 0 42px,#b9d2e3 42px 45px);transform:rotateX(90deg) translateZ(-170px)}.ceiling{position:absolute;left:50%;top:50%;width:680px;height:540px;margin-left:-340px;margin-top:-270px;background:#f8fcff;transform:rotateX(-90deg) translateZ(-170px)}.exhibit{position:absolute;top:70px;left:50%;transform:translateX(-50%);border:4px solid #c5a86c;background:#fff;color:#12385d;min-width:220px;max-width:78%;padding:17px 14px;border-radius:5px;text-align:center;box-shadow:0 9px 15px rgba(0,0,0,.12)}.exhibit strong{display:block;font-size:1.15rem}.exhibit small{display:block;color:#58738c;margin-top:7px}.wall.left .exhibit,.wall.right .exhibit{min-width:180px}.room-controls{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:14px}.room-controls .btn{padding:9px 15px}.room-hint{color:var(--muted);font-size:.85rem;text-align:center;margin:10px 0 0}
+    /* 5. Экспозициялар, уақыт сызығы және тест */
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card-icon{width:52px;height:52px;border-radius:14px;background:var(--light);display:grid;place-items:center;font-size:1.6rem}.card h3{font-size:1.22rem;margin:16px 0 8px}.card p{color:var(--muted);margin:0 0 14px}.placeholder{border:2px dashed #9fcbea;border-radius:15px;background:#f7fbff;color:#66829b;padding:28px 15px;text-align:center;font-size:.9rem;margin:17px 0}.timeline{border-left:3px solid #9acfee;margin:28px 0 0 13px;padding-left:27px}.timeline-item{position:relative;margin-bottom:23px;padding:19px 22px;background:#fff;border:1px solid var(--line);border-radius:15px}.timeline-item::before{content:"";position:absolute;left:-37px;top:25px;width:15px;height:15px;background:var(--blue);border:4px solid #d9efff;border-radius:50%}.timeline-item strong{color:var(--blue)}.timeline-item p{margin:5px 0 0;color:var(--muted)}.quiz{max-width:820px}.question{border:1px solid var(--line);border-radius:18px;background:white;padding:20px;margin:17px 0}.question legend{font-weight:800;padding:0 8px}.option{display:flex;align-items:flex-start;gap:10px;margin:12px 0;cursor:pointer}.option input{margin-top:6px;accent-color:var(--blue)}.result{display:none;padding:20px;border-radius:16px;margin-top:18px;background:#e8f7ee;border:1px solid #a5dfb9}.result.show{display:block}.result strong{font-size:1.2rem}.result ul{padding-left:20px}.contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.contact-item{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.contact-item strong{display:block;margin-bottom:8px}.contact-item span{color:var(--muted)}.footer{background:#102c4c;color:#e8f5ff;padding:30px 0}.footer .container{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.footer small{opacity:.8}
+    /* 6. Телефон мен планшетке бейімдеу */
+    @media(max-width:920px){.hero-grid{grid-template-columns:1fr}.hero-art{min-height:270px}.grid-3{grid-template-columns:repeat(2,1fr)}.nav{gap:12px}.nav a{font-size:.8rem}.brand strong{font-size:.8rem}}
+    @media(max-width:720px){.section{padding:58px 0}.header-inner{min-height:70px}.brand strong{max-width:225px}.menu-toggle{display:block}.nav{display:none;position:absolute;left:0;right:0;top:100%;background:white;flex-direction:column;align-items:stretch;gap:0;padding:10px 20px 17px;border-bottom:1px solid var(--line);box-shadow:0 15px 22px rgba(0,0,0,.08)}.nav.open{display:flex}.nav a{padding:12px;font-size:1rem}.hero{padding:56px 0}.grid-3,.contacts{grid-template-columns:1fr}.room-viewport{height:310px}.room{scale:.75}.hero-art{min-height:240px}.actions .btn{width:100%}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <!-- Жоғарғы бөлік: мектеп атауы және мобильді мәзір -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#home" class="brand" aria-label="Басты бетке өту">
+        <div class="logo" aria-hidden="true">ҚС</div>
+        <div><strong>№4 Қ. СӘТБАЕВ АТЫНДАҒЫ ЖАЛПЫ БІЛІМ БЕРЕТІН МЕКТЕП</strong><small>Виртуалды музей</small></div>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="nav">☰ Мәзір</button>
+      <nav class="nav" id="nav" aria-label="Негізгі мәзір">
+        <a href="#home">Басты бет</a><a href="#museum">3D зал</a><a href="#satbayev">Қ. Сәтбаев</a><a href="#history">Мектеп тарихы</a><a href="#chronicle">Шежіре</a><a href="#quiz">Тест</a><a href="#contacts">Байланыс</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Басты экран -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">«Зерде» ғылыми жобасы · 7-сынып</div>
+          <h1>Мектебімнің <span>цифрлық шежіресі</span></h1>
+          <p>Мектеп тарихын цифрлық форматта сақтау: Қ. Сәтбаев атындағы мектептің виртуалды музейін әзірлеу және ұсыну. Бір залдан тұратын 8 × 6 метрлік музейдің интерактивті үлгісі.</p>
+          <div class="actions"><a class="btn primary" href="#satbayev">Қ. Сәтбаевтың бұрышы</a><a class="btn secondary" href="#history">Мектеп тарихы</a><a class="btn secondary" href="#chronicle">Мектеп шежіресі</a></div>
+        </div>
+        <div class="hero-art" role="img" aria-label="Музей ғимаратының шартты суреті"><div class="art-building"><div class="art-roof"></div><div class="art-front"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="art-label">ЦИФРЛЫҚ МҰРАЖАЙ</div></div></div>
+      </div>
+    </section>
+
+    <!-- Бір залдың CSS 3D әсерлі макеті -->
+    <section class="section" id="museum">
+      <div class="container">
+        <div class="eyebrow">Интерактивті көрініс</div><h2>Бір залды виртуалды музей</h2>
+        <p class="lead">8 × 6 метрлік кабинетке арналған шартты 3D макет. Солға және оңға бұрып, төрт қабырғадағы тақырыптарды көріңіз. Бұл инженерлік дәл 3D модель емес, CSS перспективасы арқылы жасалған көрнекі үлгі.</p>
+        <div class="museum-shell">
+          <div class="museum-top"><strong>Музей залы · 48 м²</strong><p id="angleLabel" aria-live="polite">Көрініс: 0°</p></div>
+          <div class="room-viewport" aria-label="Айналмалы музей залының үлгісі">
+            <div class="room" id="room">
+              <div class="floor"></div><div class="ceiling"></div>
+              <div class="wall back"><div class="exhibit"><strong>Қаныш Сәтбаев</strong><small>Ғалымның өмірі мен мұрасы</small></div></div>
+              <div class="wall right"><div class="exhibit"><strong>Мектеп тарихы</strong><small>Тарихи деректерге орын</small></div></div>
+              <div class="wall front"><div class="exhibit"><strong>Мектеп шежіресі</strong><small>Жылдар мен оқиғалар</small></div></div>
+              <div class="wall left"><div class="exhibit"><strong>Интерактивті бұрыш</strong><small>Білімді тексеру</small></div></div>
+            </div>
+          </div>
+          <div class="room-controls"><button class="btn secondary" id="turnLeft" type="button">← Солға</button><button class="btn secondary" id="resetView" type="button">Бастапқы көрініс</button><button class="btn secondary" id="turnRight" type="button">Оңға →</button></div>
+          <p class="room-hint">Батырманы әр басқанда зал 45° бұрылады. Толық айналым — 360°.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Қаныш Сәтбаевтың бұрышы -->
+    <section class="section alt" id="satbayev">
+      <div class="container"><div class="eyebrow">Бірінші экспозиция</div><h2>Қаныш Сәтбаевтың бұрышы</h2><p class="lead">Қаныш Имантайұлы Сәтбаев (1899–1964) — көрнекті қазақ геологі, Қазақстан Ғылым академиясының тұңғыш президенті. Ол Қазақстандағы геологиялық зерттеулердің дамуына зор үлес қосты.</p>
+        <div class="grid-3">
+          <article class="card"><div class="card-icon">👤</div><h3>Өмір жолы</h3><p>Ғалымның өмірі мен білім алу кезеңдері туралы қысқаша мәлімет.</p><div class="placeholder">Портретке арналған орын</div></article>
+          <article class="card"><div class="card-icon">⛏️</div><h3>Ғылыми еңбегі</h3><p>Геология ғылымы және Жезқазған кен орындарын зерттеу бағытындағы еңбегі.</p><div class="placeholder">Құжаттар мен карталарға орын</div></article>
+          <article class="card"><div class="card-icon">🏛️</div><h3>Ғылыми мұрасы</h3><p>Қазақстан ғылымының дамуына қосқан үлесі және кейінгі ұрпаққа қалдырған өнегесі.</p><div class="placeholder">Экспонат фотосына орын</div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Мектеп тарихы: расталмаған деректерді ойдан қоспаймыз -->
+    <section class="section" id="history"><div class="container"><div class="eyebrow">Екінші экспозиция</div><h2>Мектеп тарихы</h2><p class="lead">№4 Қ. Сәтбаев атындағы жалпы білім беретін мектептің тарихи материалдары жинақталғаннан кейін осы бөлімге орналастырылады. Мектептің құрылған жылы мен тарихи оқиғалары расталмайынша жарияланбайды.</p>
+      <div class="grid-3">
+        <article class="card"><div class="card-icon">🏫</div><h3>Мектептің қалыптасуы</h3><div class="placeholder">Мектептің ескі және жаңа фотосуреттері</div><p>Ашылған жылы, ғимараттар тарихы және ресми құжаттар кейін енгізіледі.</p></article>
+        <article class="card"><div class="card-icon">📚</div><h3>Ұстаздар тарихы</h3><div class="placeholder">Мұрағат фотосуреттері</div><p>Ұстаздар мен мектеп басшылары туралы расталған деректерге арналған орын.</p></article>
+        <article class="card"><div class="card-icon">🏆</div><h3>Мектеп жетістіктері</h3><div class="placeholder">Марапаттар мен дипломдар</div><p>Оқушылар мен мұғалімдердің құжатпен расталған жетістіктері енгізіледі.</p></article>
+      </div>
+    </div></section>
+
+    <!-- Уақыт сызығы: нақты жылдарды кейін енгізу керек -->
+    <section class="section alt" id="chronicle"><div class="container"><div class="eyebrow">Үшінші экспозиция</div><h2>Мектеп шежіресі</h2><p class="lead">Тарихи оқиғаларды жылдар бойынша орналастыратын интерактивті уақыт сызығының үлгісі.</p>
+      <div class="timeline"><div class="timeline-item"><strong>1-кезең · Мектептің ашылуы</strong><p>Нақты жыл мен ресми дереккөз кейін енгізіледі.</p></div><div class="timeline-item"><strong>2-кезең · Даму кезеңдері</strong><p>Ғимараттар, ұстаздар, маңызды өзгерістер туралы деректер кейін енгізіледі.</p></div><div class="timeline-item"><strong>3-кезең · Қазіргі мектеп</strong><p>Қазіргі мектеп өмірі, жобалар және жетістіктер туралы материалдар қосылады.</p></div></div>
+    </div></section>
+
+    <!-- Тест: жауаптар JavaScript арқылы тексеріледі -->
+    <section class="section" id="quiz"><div class="container quiz"><div class="eyebrow">Интерактивті бұрыш</div><h2>Музей бойынша шағын тест</h2><p class="lead">5 сұраққа жауап беріңіз. «Нәтижені тексеру» батырмасы ұпай санын және дұрыс жауаптарды көрсетеді.</p>
+      <form id="quizForm">
+        <fieldset class="question"><legend>1. Қаныш Сәтбаев қай ғылым саласының көрнекті өкілі?</legend><label class="option"><input type="radio" name="q1" value="a"> Геология</label><label class="option"><input type="radio" name="q1" value="b"> Музыка</label><label class="option"><input type="radio" name="q1" value="c"> Медицина</label></fieldset>
+        <fieldset class="question"><legend>2. Қаныш Сәтбаев Қазақстандағы қай ғылыми мекеменің тұңғыш президенті болды?</legend><label class="option"><input type="radio" name="q2" value="a"> Ұлттық кітапхана</label><label class="option"><input type="radio" name="q2" value="b"> Қазақстан Ғылым академиясы</label><label class="option"><input type="radio" name="q2" value="c"> Ұлттық музей</label></fieldset>
+        <fieldset class="question"><legend>3. Біздің виртуалды музей қанша залдан тұрады?</legend><label class="option"><input type="radio" name="q3" value="a"> Үш</label><label class="option"><input type="radio" name="q3" value="b"> Екі</label><label class="option"><input type="radio" name="q3" value="c"> Бір</label></fieldset>
+        <fieldset class="question"><legend>4. Музейге бөлінген кабинеттің ауданы қанша?</legend><label class="option"><input type="radio" name="q4" value="a"> 48 м²</label><label class="option"><input type="radio" name="q4" value="b"> 24 м²</label><label class="option"><input type="radio" name="q4" value="c"> 80 м²</label></fieldset>
+        <fieldset class="question"><legend>5. Виртуалды музейдің басты мақсаты қандай?</legend><label class="option"><input type="radio" name="q5" value="a"> Ойын жүктеу</label><label class="option"><input type="radio" name="q5" value="b"> Мектеп тарихын цифрлық түрде сақтау және таныстыру</label><label class="option"><input type="radio" name="q5" value="c"> Тек сурет салу</label></fieldset>
+        <button type="submit" class="btn primary">Нәтижені тексеру</button> <button type="reset" class="btn secondary">Қайта бастау</button>
+      </form><div id="quizResult" class="result" role="status" aria-live="polite"></div>
+    </div></section>
+
+    <!-- Байланыс: нақты байланыс деректерін мектеп енгізеді -->
+    <section class="section alt" id="contacts"><div class="container"><div class="eyebrow">Байланыс</div><h2>Мектеппен байланыс</h2><p class="lead">Төмендегі деректер — кейін толтырылатын үлгілік орындар.</p><div class="contacts"><div class="contact-item"><strong>📍 Мекенжай</strong><span>Мектептің нақты мекенжайын енгізіңіз</span></div><div class="contact-item"><strong>☎ Телефон</strong><span>Ресми телефон нөмірін енгізіңіз</span></div><div class="contact-item"><strong>🕒 Жұмыс уақыты</strong><span>Мектептің жұмыс уақытын енгізіңіз</span></div></div></div></section>
+  </main>
+  <footer class="footer"><div class="container"><strong>Мектебімнің цифрлық шежіресі</strong><small>7-сыныптың «Зерде» ғылыми жобасына арналған оқу прототипі</small></div></footer>
+
+  <script>
+    // 1. Мобильді мәзірді ашу және жабу
+    const menuToggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('nav');
+    menuToggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.textContent = isOpen ? '✕ Жабу' : '☰ Мәзір';
+    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.textContent = '☰ Мәзір';
+    }));
+
+    // 2. CSS 3D залын шектеусіз 360 градус айналдыру
+    let angle = 0;
+    const room = document.getElementById('room');
+    const angleLabel = document.getElementById('angleLabel');
+    function renderRoom() {
+      room.style.transform = `translate(-50%, -50%) rotateX(-4deg) rotateY(${angle}deg)`;
+      angleLabel.textContent = `Көрініс: ${((angle % 360) + 360) % 360}°`;
+    }
+    document.getElementById('turnLeft').addEventListener('click', () => { angle -= 45; renderRoom(); });
+    document.getElementById('turnRight').addEventListener('click', () => { angle += 45; renderRoom(); });
+    document.getElementById('resetView').addEventListener('click', () => { angle = 0; renderRoom(); });
+
+    // 3. Викторинаның дұрыс жауаптары
+    const answers = { q1:'a', q2:'b', q3:'c', q4:'a', q5:'b' };
+    const answerTexts = {
+      q1:'Геология', q2:'Қазақстан Ғылым академиясы', q3:'Бір',
+      q4:'48 м²', q5:'Мектеп тарихын цифрлық түрде сақтау және таныстыру'
+    };
+    const quizForm = document.getElementById('quizForm');
+    const quizResult = document.getElementById('quizResult');
+    quizForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      let score = 0;
+      const details = [];
+      Object.entries(answers).forEach(([key, correct], index) => {
+        const chosen = quizForm.querySelector(`input[name="${key}"]:checked`);
+        const isCorrect = chosen && chosen.value === correct;
+        if (isCorrect) score++;
+        details.push(`<li>${index+1}-сұрақ: ${isCorrect ? '✓ Дұрыс' : '✗ Қате немесе жауап берілмеген'}. Дұрыс жауап: <strong>${answerTexts[key]}</strong></li>`);
+      });
+      quizResult.innerHTML = `<strong>Нәтиже: ${score} / 5 (${score * 20}%)</strong><p>${score === 5 ? 'Өте жақсы! Барлық жауап дұрыс.' : score >= 3 ? 'Жақсы! Қате жауаптарды қайталап көріңіз.' : 'Музей материалдарын қайта қарап шығыңыз.'}</p><ul>${details.join('')}</ul>`;
+      quizResult.classList.add('show');
+      quizResult.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+    quizForm.addEventListener('reset', () => { quizResult.classList.remove('show'); quizResult.textContent = ''; });
+  </script>
+</body>
+</html>
